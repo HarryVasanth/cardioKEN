@@ -1,0 +1,100 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:orientation="vertical">
+
+    <ImageView
+        android:layout_width="32sp"
+        android:layout_height="32sp"
+        android:id="@+id/imgWear"
+        android:src="@drawable/hr_off"
+        android:scaleType="fitXY"
+
+        android:layout_marginTop="75dp"
+        android:layout_alignParentTop="true"
+        android:layout_alignParentStart="false"
+        android:layout_marginStart="72dp" />
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Disconnected"
+        android:id="@+id/txtWearStatus"
+        android:textAppearance="@style/TextAppearance.AppCompat.Large"
+        style="@style/TextAppearance.AppCompat.Medium"
+        android:autoText="false"
+        android:gravity="center_vertical"
+        android:textColor="@android:color/holo_red_dark"
+        android:layout_alignTop="@+id/imgWear"
+        android:layout_centerHorizontal="true"
+        android:layout_above="@+id/txtHRate" />
+
+    <ImageView
+        android:layout_width="32sp"
+        android:layout_height="32sp"
+        android:id="@+id/imgConfig"
+        android:src="@drawable/config"
+        android:scaleType="fitXY"
+        android:clickable="true"
+        android:onClick="btnConfig"
+        android:layout_below="@+id/imgLogo"
+        android:layout_toEndOf="@+id/imgLogo" />
+
+    <ImageView
+        android:layout_width="32sp"
+        android:layout_height="32sp"
+        android:id="@+id/imgExit"
+        android:src="@drawable/exit"
+        android:scaleType="fitXY"
+        android:clickable="true"
+        android:onClick="btnExit"
+        android:layout_marginBottom="33dp"
+        android:layout_alignParentBottom="true"
+        android:layout_toStartOf="@+id/imgLogo" />
+
+    <ImageView
+        android:layout_width="96sp"
+        android:layout_height="96sp"
+        android:id="@+id/imgLogo"
+        android:src="@drawable/ic_cken"
+        android:scaleType="fitXY"
+        android:longClickable="false"
+        android:clickable="true"
+        android:onClick="btnInfo"
+        android:layout_above="@+id/imgExit"
+        android:layout_centerHorizontal="true" />
+
+    <TextView
+        style="@style/TextAppearance.AppCompat.Large"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="00"
+        android:id="@+id/txtHRate"
+        android:gravity="center_vertical"
+        android:textColor="@android:color/holo_red_dark"
+        android:textSize="@dimen/abc_text_size_display_4_material"
+        android:layout_below="@+id/imgWear"
+        android:layout_centerHorizontal="true" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textAppearance="?android:attr/textAppearanceSmall"
+        android:text="127.0.0.1:11111"
+        android:id="@+id/txtDIP"
+        android:layout_below="@+id/txtDIPLabel"
+        android:layout_centerHorizontal="true" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textAppearance="?android:attr/textAppearanceSmall"
+        android:text="UDP Destination:"
+        android:id="@+id/txtDIPLabel"
+        android:layout_below="@+id/txtHRate"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="39dp" />
+
+
+</RelativeLayout>
