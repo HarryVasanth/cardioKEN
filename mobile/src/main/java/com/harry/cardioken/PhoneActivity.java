@@ -6,9 +6,11 @@ import android.app.Activity;
 import android.app.AlertDialog;
 import android.content.DialogInterface;
 import android.graphics.Color;
+import android.net.wifi.WifiManager;
 import android.os.Bundle;
 import android.os.Environment;
 import android.text.InputType;
+import android.text.format.Formatter;
 import android.util.Log;
 import android.view.View;
 import android.widget.EditText;
@@ -16,6 +18,8 @@ import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.harry.cardioken.services.CKWebServer;
+import com.harry.cardioken.services.NanoHTTPD;
 import com.harry.cardioken.services.WearListenerService;
 
 import java.io.BufferedWriter;
@@ -49,6 +53,13 @@ public class PhoneActivity extends Activity implements View.OnClickListener {
     int UDP_SERVER_PORT = 11111;
     private String ipAddress = "127.0.0.1";
 
+
+    WifiManager wm;
+
+
+
+    private CKWebServer ckserver;
+
     public PhoneActivity() {
 
     }
@@ -70,6 +81,7 @@ public class PhoneActivity extends Activity implements View.OnClickListener {
         parseData = new ParseData();
         udpTimer.scheduleAtFixedRate(parseData, 0, 1000 / frequency);
 
+        wm = (WifiManager) getSystemService(WIFI_SERVICE);
 
     }
 
@@ -77,6 +89,17 @@ public class PhoneActivity extends Activity implements View.OnClickListener {
     public void onClick(View v) {
 
 
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+        try {
+            ckserver = new CKWebServer();
+
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
     }
 
     public void btnConfig(View view) {
@@ -117,7 +140,10 @@ public class PhoneActivity extends Activity implements View.OnClickListener {
     }
 
     public void btnInfo(View view) {
-        Toast.makeText(getApplicationContext(), "© 2016 CardioKEN by Harry Vasanth", Toast.LENGTH_SHORT).show();
+
+        String myip = Formatter.formatIpAddress(wm.getConnectionInfo().getIpAddress());
+        Toast.makeText(getApplicationContext(), "© 2016 CardioKEN by Harry Vasanth \n" + "Web server ip: " +myip + ":8080" , Toast.LENGTH_SHORT).show();
+
     }
 
     /////////////////////////////
@@ -200,6 +226,7 @@ public class PhoneActivity extends Activity implements View.OnClickListener {
 
     }
 
+
     ////////////////////////////
     //////// Timed Task ////////
     ////////////////////////////
@@ -233,6 +260,8 @@ public class PhoneActivity extends Activity implements View.OnClickListener {
 
                 //Write to File
                 writeData(wearListenerService.gethRate());
+
+                ckserver.HRate = wearListenerService.gethRate();
 
             } else {
                 // do something
