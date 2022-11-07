@@ -1,49 +1,41 @@
 package com.harry.cardioken.services;
 
-
 import android.util.Log;
-
 import com.google.android.gms.wearable.MessageEvent;
 import com.google.android.gms.wearable.WearableListenerService;
 import com.harry.cardioken.PhoneActivity;
 
-
 public class WearListenerService extends WearableListenerService {
-    // initiating TAG as string for debugging
-    private static final String TAG = "Wear Listener Service";
-    static String hRate = "00";
 
-    /////////////////////////////
-    /////// Wear Listener ///////
-    /////////////////////////////
+  // initiating TAG as string for debugging
+  private static final String TAG = "Wear Listener Service";
+  static String hRate = "00";
 
+  /////////////////////////////
+  /////// Wear Listener ///////
+  /////////////////////////////
 
+  @Override
+  public void onMessageReceived(MessageEvent messageEvent) {
+    super.onMessageReceived(messageEvent);
 
-    @Override
-    public void onMessageReceived(MessageEvent messageEvent) {
-        super.onMessageReceived(messageEvent);
+    String event = messageEvent.getPath();
 
-        String event = messageEvent.getPath();
+    Log.d("Sensor Data Acquired: ", event);
 
+    String[] hRateMessage = event.split("--");
 
-        Log.d("Sensor Data Acquired: ", event);
+    Log.d("hRateMessage : ", hRateMessage[0].toString());
 
-        String[] hRateMessage = event.split("--");
-
-        Log.d("hRateMessage : ", hRateMessage[0].toString());
-
-        if (hRateMessage[0].toString().equals("HR")) {
-
-            hRate = hRateMessage[1].toString();
-
-        }if (hRateMessage[0].equals("None")) {
-            hRate = "00";
-        }else {
-            Log.d("Unknown Sensor data : ", event);
-        }
-
-
-        /**
+    if (hRateMessage[0].toString().equals("HR")) {
+      hRate = hRateMessage[1].toString();
+    }
+    if (hRateMessage[0].equals("None")) {
+      hRate = "00";
+    } else {
+      Log.d("Unknown Sensor data : ", event);
+    }
+    /**
          /////////////////////////////
          //////// UDP Sender /////////
          /////////////////////////////
@@ -77,11 +69,9 @@ public class WearListenerService extends WearableListenerService {
          }
 
          **/
-    }
-    public static String gethRate() {
-        return hRate;
-    }
+  }
+
+  public static String gethRate() {
+    return hRate;
+  }
 }
-
-
-
